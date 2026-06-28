@@ -223,7 +223,7 @@ int main(int argc, char** argv) {
     if (!model) { fprintf(stderr, "[server] Load failed\n"); return 1; }
 
     struct llama_context_params cp = llama_context_default_params();
-    cp.n_ctx    = 4096;  // larger ctx to handle multiple concurrent requests
+    cp.n_ctx    = 8192;  // larger ctx to handle multiple concurrent requests
     cp.n_batch  = 512;
     cp.n_ubatch = 512;
     cp.n_seq_max = 4;    // support up to 4 concurrent sequence slots
