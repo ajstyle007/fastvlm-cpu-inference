@@ -2,9 +2,15 @@
 
 Complete pipeline for converting FastVLM from PyTorch multimodal checkpoint to optimized ONNX + GGUF format for CPU-only inference.
 
+<img width="1500" height="900" alt="Screenshot 2026-06-15 012608" src="https://github.com/user-attachments/assets/79721530-61db-4fda-b8f8-495d8e9aa149" />
+
 ## Overview
 
 This repository contains the **model conversion scripts** to transform the FastVLM multimodal model into production-ready formats:
+
+For live running models you can check below links:
+For 512 resolution: https://musk12-fastvlm-cpu-inference-demo.hf.space
+For 1024 resolution: https://musk12-fastvlm-fast-inference-on-cpu.hf.space
 
 - **Vision Encoder**: PyTorch → ONNX (1024 & 512 resolution variants)
 - **Language Model**: HuggingFace safetensors → GGUF Q4_K_M quantization
@@ -183,13 +189,13 @@ gcc fastvlm_infer_v3.c \
 ### 1024 Resolution (Higher Quality)
 - ONNX: `vision_encoder_fp32.onnx` (1024×1024 input)
 - Embedding shape: (256, 896)
-- Vision inference: ~100–150ms
+- Vision inference: ~4079–5071ms
 - Use for detailed analysis tasks
 
 ### 512 Resolution (Faster)
 - ONNX: `vision_projector_v1_standalone.onnx` (512×512 input)
 - Embedding shape: (64, 896) — smaller embedding
-- Vision inference: ~20–40ms
+- Vision inference: ~1290 ms to 1430ms
 - Use for speed-critical applications
 
 **Trade-off**: 512 resolution is 3–5× faster with minor quality loss on fine-grained details.
@@ -207,14 +213,14 @@ fastvlm_server                   (executable) ← C inference binary
 
 ## Performance Metrics
 
-Measured on Intel Xeon CPU (8 cores):
+Measured on Intel CPU (6 cores):
 
 | Component | 1024 Res | 512 Res |
 |-----------|----------|---------|
 | Vision preprocess | 10–20ms | 10–15ms |
-| ONNX inference | 80–120ms | 15–30ms |
+| ONNX inference | 4079–5071ms | 1290-1430ms |
 | LLM first token | 300–500ms | 300–500ms |
-| **Total TTFT** | **1000–1400ms** | **800–1400ms** |
+| **Total TTFT** | **5450-9637ms** | **1450-1640ms** |
 
 TTFT = Time To First Token (includes image encoding, LLM generation start)
 
@@ -265,7 +271,7 @@ PY
 
 ## References
 
-- **FastVLM**: https://huggingface.co/NVIDIA/FastVLM_Qwen2_0.5B
+- **FastVLM**: https://huggingface.co/apple/FastVLM-0.5B
 - **llama.cpp**: https://github.com/ggml-org/llama.cpp
 - **ONNX**: https://onnx.ai/
 - **GGUF Format**: https://github.com/ggml-org/ggml/blob/master/docs/gguf.md
@@ -277,7 +283,7 @@ If you use this pipeline in research or production:
 ```bibtex
 @software{fastvlm_cpu_inference,
   title = {FastVLM CPU Inference Pipeline},
-  author = {Your Name},
+  author = {Ajay Kumar},
   url = {https://github.com/ajstyle007/fastvlm-cpu-inference},
   year = {2026}
 }
