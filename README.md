@@ -9,8 +9,9 @@ Complete pipeline for converting FastVLM from PyTorch multimodal checkpoint to o
 This repository contains the **model conversion scripts** to transform the FastVLM multimodal model into production-ready formats:
 
 For live running models you can check below links:
-For 512 resolution: https://musk12-fastvlm-cpu-inference-demo.hf.space
-For 1024 resolution: https://musk12-fastvlm-fast-inference-on-cpu.hf.space
+
+- For 512 resolution: https://musk12-fastvlm-cpu-inference-demo.hf.space
+- For 1024 resolution: https://musk12-fastvlm-fast-inference-on-cpu.hf.space
 
 - **Vision Encoder**: PyTorch → ONNX (1024 & 512 resolution variants)
 - **Language Model**: HuggingFace safetensors → GGUF Q4_K_M quantization
